@@ -1,12 +1,12 @@
-package com.nisum.nisumtest.security.utils;
+package com.nisum.nisumtest.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.nisum.nisumtest.security.entity.Role;
-import com.nisum.nisumtest.security.enums.RoleName;
-import com.nisum.nisumtest.security.service.RoleService;
+import com.nisum.nisumtest.entity.Role;
+import com.nisum.nisumtest.enums.RoleName;
+import com.nisum.nisumtest.service.RoleService;
 
 @Component
 public class CreateRoles implements CommandLineRunner {

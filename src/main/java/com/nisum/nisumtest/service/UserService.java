@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.service;
+package com.nisum.nisumtest.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -15,13 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nisum.nisumtest.security.dto.NewUserDto;
-import com.nisum.nisumtest.security.dto.UpdateUserDto;
-import com.nisum.nisumtest.security.entity.Role;
-import com.nisum.nisumtest.security.entity.User;
-import com.nisum.nisumtest.security.enums.RoleName;
-import com.nisum.nisumtest.security.repository.UserRepository;
-import com.nisum.nisumtest.security.utils.ResponseMessage;
+import com.nisum.nisumtest.dto.NewUserDto;
+import com.nisum.nisumtest.dto.UpdateUserDto;
+import com.nisum.nisumtest.entity.Role;
+import com.nisum.nisumtest.entity.User;
+import com.nisum.nisumtest.enums.RoleName;
+import com.nisum.nisumtest.repository.UserRepository;
+import com.nisum.nisumtest.utils.ResponseMessage;
 
 @Service
 @Transactional

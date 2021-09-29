@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.service;
+package com.nisum.nisumtest.service;
 
 import java.util.Optional;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nisum.nisumtest.security.entity.Role;
-import com.nisum.nisumtest.security.enums.RoleName;
-import com.nisum.nisumtest.security.repository.RoleRepository;
+import com.nisum.nisumtest.entity.Role;
+import com.nisum.nisumtest.enums.RoleName;
+import com.nisum.nisumtest.repository.RoleRepository;
 
 @Service
 @Transactional

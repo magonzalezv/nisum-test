@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.entity;
+package com.nisum.nisumtest.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import com.nisum.nisumtest.security.enums.RoleName;
+import com.nisum.nisumtest.enums.RoleName;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

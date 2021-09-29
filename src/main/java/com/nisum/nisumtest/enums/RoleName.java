@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.enums;
+package com.nisum.nisumtest.enums;
 
 public enum RoleName {
 	

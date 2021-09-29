@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.entity;
+package com.nisum.nisumtest.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

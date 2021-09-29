@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.dto;
+package com.nisum.nisumtest.dto;
 
 import javax.validation.constraints.NotBlank;
 

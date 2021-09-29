@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.dto;
+package com.nisum.nisumtest.dto;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.nisum.nisumtest.security.entity.Phone;
+import com.nisum.nisumtest.entity.Phone;
 
 import lombok.Data;
 

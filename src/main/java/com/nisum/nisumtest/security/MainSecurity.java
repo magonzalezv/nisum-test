@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.nisum.nisumtest.security.jwt.JwtEntryPoint;
 import com.nisum.nisumtest.security.jwt.JwtTokenFilter;
-import com.nisum.nisumtest.security.service.UserDetailsServiceImpl;
+import com.nisum.nisumtest.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.utils;
+package com.nisum.nisumtest.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

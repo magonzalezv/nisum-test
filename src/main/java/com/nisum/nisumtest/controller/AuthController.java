@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.controller;
+package com.nisum.nisumtest.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nisum.nisumtest.security.dto.JwtDto;
-import com.nisum.nisumtest.security.dto.LoginUserDto;
-import com.nisum.nisumtest.security.dto.NewUserDto;
-import com.nisum.nisumtest.security.dto.ResponseNewUserDto;
-import com.nisum.nisumtest.security.entity.User;
+import com.nisum.nisumtest.dto.JwtDto;
+import com.nisum.nisumtest.dto.LoginUserDto;
+import com.nisum.nisumtest.dto.NewUserDto;
+import com.nisum.nisumtest.dto.ResponseNewUserDto;
+import com.nisum.nisumtest.entity.User;
 import com.nisum.nisumtest.security.jwt.JwtProvider;
-import com.nisum.nisumtest.security.service.UserService;
-import com.nisum.nisumtest.security.utils.ResponseMessage;
+import com.nisum.nisumtest.service.UserService;
+import com.nisum.nisumtest.utils.ResponseMessage;
 import com.nisum.nisumtest.utils.Validations;
 
 @RestController

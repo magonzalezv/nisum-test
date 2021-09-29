@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.controller;
+package com.nisum.nisumtest.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nisum.nisumtest.security.dto.UpdateUserDto;
-import com.nisum.nisumtest.security.entity.User;
-import com.nisum.nisumtest.security.service.UserService;
-import com.nisum.nisumtest.security.utils.ResponseMessage;
+import com.nisum.nisumtest.dto.UpdateUserDto;
+import com.nisum.nisumtest.entity.User;
+import com.nisum.nisumtest.service.UserService;
+import com.nisum.nisumtest.utils.ResponseMessage;
 
 @RestController
 @RequestMapping("/user")

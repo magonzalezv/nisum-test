@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.service;
+package com.nisum.nisumtest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.nisum.nisumtest.security.entity.PrincipalUser;
-import com.nisum.nisumtest.security.entity.User;
+import com.nisum.nisumtest.entity.PrincipalUser;
+import com.nisum.nisumtest.entity.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

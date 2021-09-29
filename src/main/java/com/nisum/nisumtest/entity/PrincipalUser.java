@@ -1,4 +1,4 @@
-package com.nisum.nisumtest.security.entity;
+package com.nisum.nisumtest.entity;
 
 import java.util.Collection;
 import java.util.List;
