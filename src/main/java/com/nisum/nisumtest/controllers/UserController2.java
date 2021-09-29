@@ -25,7 +25,7 @@ import com.nisum.nisumtest.services.UserService2;
 import com.nisum.nisumtest.utils.MessageResponse;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user2")
 public class UserController2 {
 
 	@Autowired

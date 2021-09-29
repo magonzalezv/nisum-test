@@ -14,27 +14,27 @@ public class PrincipalUser implements UserDetails {
 
 	private String name;
 
-	private String userName;
-
 	private String email;
 
 	private String password;
 
+	private List<Phone> phones;
+
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public PrincipalUser(String name, String userName, String email, String password,
+	public PrincipalUser(String name, String email, String password, List<Phone> phones,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.name = name;
-		this.userName = userName;
 		this.email = email;
 		this.password = password;
+		this.phones = phones;
 		this.authorities = authorities;
 	}
 
 	public static PrincipalUser build(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(rol -> new SimpleGrantedAuthority(rol.getRoleName().name())).collect(Collectors.toList());
-		return new PrincipalUser(user.getName(), user.getUserName(), user.getEmail(), user.getPassword(), authorities);
+		return new PrincipalUser(user.getName(), user.getEmail(), user.getPassword(), user.getPhones(), authorities);
 	}
 
 	@Override
@@ -43,13 +43,13 @@ public class PrincipalUser implements UserDetails {
 	}
 
 	@Override
-	public String getPassword() {
-		return password;
+	public String getUsername() {
+		return email;
 	}
 
 	@Override
-	public String getUsername() {
-		return userName;
+	public String getPassword() {
+		return password;
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class PrincipalUser implements UserDetails {
 		return name;
 	}
 
-	public String getEmail() {
-		return email;
+	public List<Phone> getPhones() {
+		return phones;
 	}
 
 }

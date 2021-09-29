@@ -1,7 +1,7 @@
 package com.nisum.nisumtest.security.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,24 +21,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nisum.nisumtest.security.dto.JwtDto;
-import com.nisum.nisumtest.security.dto.LoginUser;
-import com.nisum.nisumtest.security.dto.NewUser;
-import com.nisum.nisumtest.security.entity.Role;
+import com.nisum.nisumtest.security.dto.LoginUserDto;
+import com.nisum.nisumtest.security.dto.NewUserDto;
+import com.nisum.nisumtest.security.dto.ResponseNewUserDto;
 import com.nisum.nisumtest.security.entity.User;
-import com.nisum.nisumtest.security.enums.RoleName;
 import com.nisum.nisumtest.security.jwt.JwtProvider;
-import com.nisum.nisumtest.security.service.RoleService;
 import com.nisum.nisumtest.security.service.UserService;
 import com.nisum.nisumtest.security.utils.ResponseMessage;
-import com.nisum.nisumtest.utils.MessageResponse;
+import com.nisum.nisumtest.utils.Validations;
 
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -48,52 +42,54 @@ public class AuthController {
 	UserService userService;
 
 	@Autowired
-	RoleService roleService;
-
-	@Autowired
 	JwtProvider jwtProvider;
 
-	@PostMapping("/create")
-	public ResponseEntity<?> createUser(@Valid @RequestBody NewUser newUser, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return new ResponseEntity(new ResponseMessage("Campos incorrectos"), HttpStatus.BAD_REQUEST);
-		}
+	@Autowired
+	Validations validations;
 
-		if (userService.existsByUserName(newUser.getUserName())) {
-			return new ResponseEntity(new ResponseMessage("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+	@PostMapping("/create")
+	public ResponseEntity<?> createUser(@Valid @RequestBody NewUserDto newUser, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			Map<String, String> errors = new HashMap<>();
+			bindingResult.getFieldErrors().forEach(err -> {
+				errors.put(err.getField(), err.getDefaultMessage());
+			});
+			return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
 		}
 
 		if (userService.existsByEmail(newUser.getEmail())) {
-			return new ResponseEntity(new ResponseMessage("Ese email ya existe"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ResponseMessage("Ese email ya esta registrado"), HttpStatus.BAD_REQUEST);
 		}
 
-		User user = new User(newUser.getName(), newUser.getUserName(), newUser.getEmail(),
-				passwordEncoder.encode(newUser.getPassword()));
-		Set<Role> roles = new HashSet<>();
-		roles.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
-		if (newUser.getRoles().contains("admin")) {
-			roles.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
+		if (!validations.validatePassword(newUser.getPassword())) {
+			return new ResponseEntity<>(new ResponseMessage("El password no cumple con los requisitos minimos"),
+					HttpStatus.BAD_REQUEST);
 		}
-		user.setRoles(roles);
 
-		userService.save(user);
+		User savedUser = userService.save(newUser);
 
-		return new ResponseEntity(new ResponseMessage("usuario creado"), HttpStatus.CREATED);
+		ResponseNewUserDto responseUser = new ResponseNewUserDto(savedUser.getId(), savedUser.getCreated(),
+				savedUser.getModified(), savedUser.getLastLogin(), savedUser.isActive());
+
+		return new ResponseEntity<>(responseUser, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUser loginUser, BindingResult bindingResult) {
+	public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUserDto loginUser, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity(new ResponseMessage("Campos incorrectos"), HttpStatus.BAD_REQUEST);
 		}
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginUser.getUserName(), loginUser.getPassword()));
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtProvider.generateToken(authentication);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
+		
+		userService.updateLastLogin(userDetails.getUsername());
 
-		return new ResponseEntity(jwtDto, HttpStatus.OK);
+		return new ResponseEntity<JwtDto>(jwtDto, HttpStatus.OK);
 	}
 
 }
